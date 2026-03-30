@@ -17,12 +17,8 @@ class LearningRequest(BaseModel):
     topic: str = Field(..., example="Machine Learning")
     weekly_hours: int = Field(..., example=8)
 
-@app.get("/")
-def home():
-    return {"message": "Learning Plan Agent is running 🚀"}
 
-@app.get("/ui", response_class=HTMLResponse)
-def ui():
+def get_ui_html():
     return """
     <!DOCTYPE html>
     <html>
@@ -139,6 +135,17 @@ def ui():
     </body>
     </html>
     """
+
+
+@app.get("/", response_class=HTMLResponse)
+def home():
+    return get_ui_html()
+
+
+@app.get("/ui", response_class=HTMLResponse)
+def ui():
+    return get_ui_html()
+
 
 @app.post("/plan")
 def create_plan(request: LearningRequest):
